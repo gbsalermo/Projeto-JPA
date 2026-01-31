@@ -3,12 +3,23 @@ package com.salermoJava.projetoJPA.entities;
 import java.io.Serializable;
 import java.util.Objects;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+
+@Entity
+@Table(name = "tb_user") //Precisa renomear pois a palavra User é uma palavra reservada, entao isso serve para evitar conflitos
 public class User implements Serializable {
 	
 	
 	private static final long serialVersionUID = 1L;
 	
 	//Atributos basicos
+	@Id //Pra definir o Id como a chave principal
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
 	private String email;
