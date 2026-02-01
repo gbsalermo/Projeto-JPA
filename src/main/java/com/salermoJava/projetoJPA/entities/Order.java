@@ -2,7 +2,9 @@ package com.salermoJava.projetoJPA.entities;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -37,6 +40,9 @@ public class Order implements Serializable {
 	@ManyToOne //Indica relação 
 	@JoinColumn(name = "client_id")
 	private User client; //Pedido tem um usuario(Muitos para um)
+	
+	@OneToMany(mappedBy = "id.order")
+	private Set<OrderItem> items = new HashSet<>();
 	
 	public Order() {
 		
@@ -83,6 +89,9 @@ public class Order implements Serializable {
 		this.client = client;
 	}
 
+	public Set<OrderItem> getItems(){
+		return items;
+	}
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);

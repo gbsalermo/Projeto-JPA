@@ -7,6 +7,7 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.salermoJava.projetoJPA.entities.pk.OrderItemPK;
 
 @Entity
@@ -17,7 +18,7 @@ public class OrderItem implements Serializable {
 
 	//Instancio a classe auxiliar
 	@EmbeddedId
-	private OrderItemPK id;
+	private OrderItemPK id = new OrderItemPK(); //Classes auxiliares tem de ser instanciadas
 	
 	private Integer quantity;
 	private Double price;
@@ -36,6 +37,7 @@ public class OrderItem implements Serializable {
 	}
 	
 	//Get/set order
+	@JsonIgnore
 	public Order getOrder() {
 		return id.getOrder();
 	}

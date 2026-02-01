@@ -10,10 +10,12 @@ import org.springframework.context.annotation.Profile;
 
 import com.salermoJava.projetoJPA.entities.Category;
 import com.salermoJava.projetoJPA.entities.Order;
+import com.salermoJava.projetoJPA.entities.OrderItem;
 import com.salermoJava.projetoJPA.entities.Product;
 import com.salermoJava.projetoJPA.entities.User;
 import com.salermoJava.projetoJPA.entities.enums.OrderStatus;
 import com.salermoJava.projetoJPA.repositories.CategoryRepository;
+import com.salermoJava.projetoJPA.repositories.OrderItemRepository;
 import com.salermoJava.projetoJPA.repositories.OrderRepository;
 import com.salermoJava.projetoJPA.repositories.ProductRepository;
 import com.salermoJava.projetoJPA.repositories.UserRepository;
@@ -34,6 +36,9 @@ public class TestConfig implements CommandLineRunner {
 	
 	@Autowired
 	private ProductRepository productRepository;
+	
+	@Autowired
+	private OrderItemRepository orderItemRepository;
 	
 	@Override
 	public void run(String... args) throws Exception { 
@@ -74,6 +79,13 @@ public class TestConfig implements CommandLineRunner {
 		//Salvo os produtos novamente
 		productRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5));
 
+		OrderItem oi1 = new OrderItem(o1, p1, 2, p1.getPrice());
+		OrderItem oi2 = new OrderItem(o1, p3, 1, p3.getPrice());
+		OrderItem oi3 = new OrderItem(o2, p3, 2, p3.getPrice());
+		OrderItem oi4 = new OrderItem(o3, p5, 2, p5.getPrice());
+		
+		orderItemRepository.saveAll(Arrays.asList(oi1, oi2, oi3, oi4));
+		
 			
 	}
 }
