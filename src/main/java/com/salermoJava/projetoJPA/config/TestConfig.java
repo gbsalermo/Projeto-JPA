@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Profile;
 import com.salermoJava.projetoJPA.entities.Category;
 import com.salermoJava.projetoJPA.entities.Order;
 import com.salermoJava.projetoJPA.entities.OrderItem;
+import com.salermoJava.projetoJPA.entities.Payment;
 import com.salermoJava.projetoJPA.entities.Product;
 import com.salermoJava.projetoJPA.entities.User;
 import com.salermoJava.projetoJPA.entities.enums.OrderStatus;
@@ -85,6 +86,11 @@ public class TestConfig implements CommandLineRunner {
 		OrderItem oi4 = new OrderItem(o3, p5, 2, p5.getPrice());
 		
 		orderItemRepository.saveAll(Arrays.asList(oi1, oi2, oi3, oi4));
+		
+		Payment pay1 = new Payment(null, Instant.parse("2019-06-20T21:53:07Z"), o1);
+		o1.setPayment(pay1);
+		
+		orderRepository.save(o1); //No caso de uma relação de um para um, eu nao preciso de outro repositorio
 		
 			
 	}
