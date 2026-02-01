@@ -13,6 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.salermoJava.projetoJPA.entities.enums.OrderStatus;
 
 
 
@@ -31,6 +32,7 @@ public class Order implements Serializable {
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT") //formatar o horario
 	private Instant moment;
 
+	private Integer orderStatus; 
 	
 	@ManyToOne //Indica relação 
 	@JoinColumn(name = "client_id")
@@ -40,10 +42,12 @@ public class Order implements Serializable {
 		
 	}
 
-	public Order(Long id, Instant moment, User client) {
+	public Order(Long id, Instant moment, OrderStatus orderStatus, User client) {
 		this.id = id;
 		this.moment = moment;
+		setOrderStatus(orderStatus);//no lugar de this uso o set do OrderStatus
 		this.client = client;
+		
 	}
 
 	public Long getId() {
@@ -60,6 +64,15 @@ public class Order implements Serializable {
 
 	public void setMoment(Instant moment) {
 		this.moment = moment;
+	}
+	public OrderStatus getOrderStatus() {
+		return OrderStatus.valueOf(orderStatus); //faço isso para converter o integer para OrderStatus
+	}
+
+	public void setOrderStatus(OrderStatus orderStatus) {
+		if (orderStatus != null) {
+		this.orderStatus = orderStatus.getCode(); //faço a conversão inversa aqui
+		}
 	}
 
 	public User getClient() {
