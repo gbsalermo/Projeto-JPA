@@ -9,8 +9,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 @Entity
@@ -27,7 +29,8 @@ public class Category implements Serializable {
 	private Long id;
 	private String name; 
 	
-	@Transient //impede que o programa tente interpretar o set
+	@JsonIgnore // para evitar o looping infinito no postman
+	@ManyToMany(mappedBy = "categories")
 	private Set<Product> products = new HashSet<>();
 	
 	//Construtores
