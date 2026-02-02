@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -41,7 +42,7 @@ public class UserResource {
 		return ResponseEntity.ok().body(obj);
 	}
 	
-	@PostMapping
+	@PostMapping //Função rest para inserir recursos
 	public ResponseEntity<User> insert(@RequestBody User obj){
 		obj = service.insert(obj);
 		//Uso o URI que serve para identificar e localizar(Recursos/entidades) funcionando como uma etiqueta
@@ -49,9 +50,15 @@ public class UserResource {
 				.buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).body(obj);
 	}
-	@DeleteMapping(value = "/{id}")
+	@DeleteMapping(value = "/{id}") //Função rest DeleteMaping usada para remover recursos do servidor
 	public ResponseEntity<Void> delete(@PathVariable Long id){
 		service.delete(id);
 		return ResponseEntity.noContent().build(); //O NoContente vai retornar uma resposa vazia e permitir o 204
+	}
+	
+	@PutMapping(value = "/{id}") //Função rest para atualizar recursos
+	public ResponseEntity<User> update(@PathVariable Long id, @RequestBody User obj){
+		obj = service.update(id, obj);
+		return ResponseEntity.ok().body(obj);
 	}
 }
