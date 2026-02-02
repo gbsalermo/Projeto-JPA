@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.salermoJava.projetoJPA.entities.User;
 import com.salermoJava.projetoJPA.repositories.UserRepository;
+import com.salermoJava.projetoJPA.services.exceptions.ResourceNotFoundException;
 
 
 @Service//Registra sua classe como um serviço na camada de serviço do spring
@@ -23,7 +24,8 @@ public class UserService {
 	}
 	public User findById(Long id) {
 		Optional<User> obj = repository.findById(id); //Uso o optional pois o valor pode ou nao estar presente, assimn evitando exceção
-		return obj.get();
+		return obj.orElseThrow(() -> new ResourceNotFoundException(id));
+		//O ElseThrow tenta dar o get, se não tiver usuario lança a exceção personalizada
 	}
 
 	public User insert(User obj) {
